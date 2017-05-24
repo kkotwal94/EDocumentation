@@ -1,10 +1,15 @@
 import React, { PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import classNames from 'classnames/bind';
+import { withRouter } from 'react-router';
 import Navigation from '../containers/Navigation';
 import Message from '../containers/Message';
 import styles from '../css/main';
-
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 const cx = classNames.bind(styles);
 
 
@@ -17,20 +22,25 @@ const cx = classNames.bind(styles);
  * A better explanation of react-router is available here:
  * https://github.com/rackt/react-router/blob/latest/docs/Introduction.md
  */
-const App = ({children}) => {
+ class App extends React.Component {
+ 	constructor(props) {
+ 		super(props);
+ 	}
+  render() {
   return (
-    <MuiThemeProvider>
-    <div className={cx('app')}>
-      <Navigation />
-      <Message />
-        {children}
-    </div>
-  </MuiThemeProvider>
-  );
+     <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme, { userAgent: 'all' })}>
+     <div className={cx('app')}>
+       <Navigation />
+
+         {this.props.children}
+     </div>
+     </MuiThemeProvider>
+   );
 };
+}
 
 App.propTypes = {
   children: PropTypes.object
 };
 
-export default App;
+export default withRouter(App);
