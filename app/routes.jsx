@@ -6,7 +6,9 @@ import {
     About,
     LoginOrRegister,
     LandingPage,
-    Profile
+    Profile,
+    Document,
+    CreateDocument
 } from './pages';
 
 /*
@@ -50,6 +52,8 @@ export default(store) => {
             <Route path="profile" component={Profile}/>
             <Route path="dashboard" component={Dashboard} onEnter={requireAuth}/>
             <Route path="about" component={About}/>
+            <Route path="documents" component={Document} />
+            <Route path="create" component={CreateDocument} />
         </Route>
     );
 };

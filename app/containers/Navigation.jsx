@@ -90,9 +90,16 @@ class Navigation extends Component {
 
  _getSelectedIndex() {
    if (this.props.router.isActive('/dashboard')){
-     return 8;
-   }  else if (this.props.router.isActive('/profile')){
+     return 9;
+   }
+   else if (this.props.router.isActive('/profile')){
      return 7;
+   }
+   else if(this.props.router.isActive('/documents')){
+     return 10;
+   }
+   else if(this.props.router.isActive('/create')){
+     return 12;
    }
    else if(this.props.router.isActive('/about')){
      return 5;
@@ -110,21 +117,29 @@ class Navigation extends Component {
     if(value == 7) {
       route = '/profile';
     }
-    if(value == 8) {
+    if(value == 9) {
       route = '/dashboard';
+    }
+    if(value == 10){
+      route = "/documents";
+    }
+    if(value == 12){
+      route = "/create";
+    }
+    if(value == 8){
+      route = '/login';
     }
     if(value == 5) {
       route = '/about';
     }
-    if(route != '/login') {
       this.props.router.push(route);
       this.setState({tabIndex: this._getSelectedIndex()});
-    }
 
   }
 
   _returnHome = () => {
       this.props.router.push('/');
+      this.setState({tabIndex: this._getSelectedIndex()});
   }
 
   //method for handling logout
@@ -138,7 +153,7 @@ class Navigation extends Component {
 
   let styles = {
       root: {
-        backgroundColor: '#333',
+        backgroundColor: '#8BC34A',
         position: 'fixed',
         height: 64,
         top: 0,
@@ -166,7 +181,7 @@ class Navigation extends Component {
       svgLogo: {
         width: 65,
         height: 65,
-        backgroundColor: '#333',
+        backgroundColor: '#8BC34A',
         position: 'absolute',
         top: 0,
       },
@@ -177,20 +192,19 @@ class Navigation extends Component {
       },
       tab: {
         height: 64,
-        backgroundColor: '#333'
+        backgroundColor: '#8BC34A'
       },
 
     };
     let renderedResult;
-    let loggedIn = false
+    let loggedIn = true
 
     let materialIcon = this.state.tabIndex !== '0' ? (
-      <Link to="/">
      <EnhancedButton
         style={styles.svgLogoContainer}
         onClick={this._returnHome}>
-        <span style={styles.span}>EDocumentation</span>
-    </EnhancedButton></Link>) : null;
+        <span style={styles.span}>E-Docs</span>
+    </EnhancedButton>) : null;
 
     if (loggedIn) {
     renderedResult = (
@@ -206,17 +220,29 @@ class Navigation extends Component {
               style={styles.tabs}
               value={this.state.tabIndex}
               onChange={this._handleTabChange}
-              inkBarStyle={{backgroundColor:"#FFC107"}}>
+              inkBarStyle={{backgroundColor:"#E91E63"}}>
               <Tab
-                value="8"
+                value={9}
                 label="DASHBOARD"
                 style={styles.tab} />
                 <Tab
-                  value="7"
+                  value={10}
+                  label="DOCS"
+                  style={styles.tab} />
+                <Tab
+                  value={12}
+                  label="CREATE"
+                  style={styles.tab} />
+                <Tab
+                  value={7}
                   label="PROFILE"
                   style={styles.tab}/>
                 <Tab
-                value="5"
+                  value={99}
+                  label="LOGOUT"
+                  style={styles.tab} />
+                <Tab
+                value={5}
                 label="ABOUT"
                 style={styles.tab} />
             </Tabs>
@@ -243,17 +269,15 @@ else {
               style={styles.tabs}
               value={this.state.tabIndex}
               onChange={this._handleTabChange}
-              inkBarStyle={{backgroundColor:"#FFC107"}}>
-              <Tab
-                value={8}
-                label="DASHBOARD"
-                style={styles.tab}
-                 />
-               <Tab
-                 value={7}
-                 label="PROFILE"
-                 style={styles.tab}
-               />
+              inkBarStyle={{backgroundColor:"#E91E63"}}>
+                 <Tab
+                   value={10}
+                   label="DOCUMENTS"
+                   style={styles.tab} />
+                   <Tab
+                     value={8}
+                     label="LOGIN / SIGNUP"
+                     style={styles.tab} />
                 <Tab
                 value={5}
                 label="ABOUT"
@@ -281,7 +305,11 @@ return (
     let title =
       this.props.router.isActive('/dashboard') ? 'Dashboard' :
       this.props.router.isActive('/profile') ? 'Profile' :
-      this.props.router.isActive('/about') ? 'About' : 'E-Docs';
+      this.props.router.isActive('/about') ? 'About' :
+      this.props.router.isActive('/login') ? 'Login' :
+      this.props.router.isActive('/documents') ? 'Documents' :
+      this.props.router.isActive('/create') ? 'Create Documents' :
+      'E-Docs';
 
 
 
@@ -304,14 +332,14 @@ return (
           titleStyle={style.title}
           iconStyleLeft={style.icon}
           zDepth={0}
-          style={{position: 'fixed', height: '64px', top: 0, backgroundColor: '#333', top: 0, right: 0  }}/>
+          style={{position: 'fixed', height: '64px', top: 0, backgroundColor: '#8BC34A', top: 0, right: 0  }}/>
       </div>);
   }
 
 
   render() {
     let renderedresult;
-    let loggedIn = false;
+    let loggedIn = true;
     let renderTabs = this.state.renderTabs;
     if(renderTabs == true){
     renderTabs = this._getTabs();
@@ -325,7 +353,7 @@ return (
          root: { cursor: 'pointer',
           fontSize: 24,
           lineHeight: Spacing.desktopKeylineIncrement + 'px',
-          backgroundColor: "#333",
+          backgroundColor: "#8BC34A",
           paddingLeft: Spacing.desktopGutter,
           marginBottom: 8 }
         };
@@ -341,14 +369,6 @@ return (
       }
 
     };
-
-    let title =
-      this.props.router.isActive('/dashboard') ? 'Dashboard' :
-      this.props.router.isActive('/profile') ? 'Profile' :
-      //this.context.history.isActive('/login') ? 'Login' :
-      this.props.router.isActive('/about') ? 'About' : '';
-
-
       if (loggedIn) {
       renderedresult = (
 <Drawer width={300} docked = {false} open={this.state.leftNavOpen} onRequestChange={this.handleChangeRequestLeftNav}>
@@ -365,9 +385,18 @@ return (
             <ListItem
               value="/profile"
               primaryText="Profile"/>
+              <ListItem
+                value="/documents"
+                primaryText="Docs"/>
+                <ListItem
+                  value="/create"
+                  primaryText="Create"/>
           <ListItem
             value="/about"
             primaryText="About"/>
+            <ListItem
+              value="/logout"
+              primaryText="Log out"/>
           </SelectableList>
         </Drawer>
         );
@@ -377,19 +406,19 @@ return (
       renderedresult = (
         <Drawer width={300} docked = {false} open={this.state.leftNavOpen} onRequestChange={this.handleChangeRequestLeftNav}>
         <div style = {header.root}>
-        E-Docs
+        <Link to="/">E-Docs</Link>
         </div>
           <SelectableList
             value = {this._getSelectedItem}
             onChange = {this.handleRequestChangeList}
           >
 
-          <ListItem
-            value="/dashboard"
-            primaryText="Dashboard"/>
             <ListItem
-              value="/profile"
-              primaryText="Profile"/>
+              value="/documents"
+              primaryText="Documents"/>
+            <ListItem
+              value="/login"
+              primaryText="Login / Sign-up"/>
           <ListItem
             value="/about"
             primaryText="About"/>
@@ -409,14 +438,17 @@ return (
 
   //get selected item
   _getSelectedItem = () => {
-    this.setState({tabIndex: this._getSelectedIndex()});
-     return this.props.router.isActive('/') ? 'Dashboard' :
-      this.props.router.isActive('/profile') ? 'Profile' :
-      this.props.router.isActive('/about') ? 'About' : '';
+     return this.props.router.isActive('/dashboard') ? 'Dashboard' :
+     this.props.router.isActive('/profile') ? 'Profile' :
+     this.props.router.isActive('/about') ? 'About' :
+     this.props.router.isActive('/login') ? 'Login' :
+     this.props.router.isActive('/document') ? 'Documents' :
+     this.props.router.isActive('/create') ? 'Create Documents' : "";
 
   }
 
    handleRequestChangeList = (event, value) => {
+     console.log(value);
     if(value == "null") {
         this.setState({
         leftNavOpen: false,
@@ -424,6 +456,7 @@ return (
     }
     else {
         this.props.router.push(value);
+        this.setState({tabIndex: this._getSelectedIndex()});
         this.setState({
           leftNavOpen: false,
         });
