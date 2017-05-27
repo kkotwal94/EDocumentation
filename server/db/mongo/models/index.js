@@ -1,4 +1,8 @@
 export default function loadModels() {
-  require('./topics');
+  require('./documentation');
+  require('./document');
+  require('./subdocument');
+  require('./organization');
+  require('./section');
   require('./user');
 }

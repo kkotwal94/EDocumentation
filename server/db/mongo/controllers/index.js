@@ -1,9 +1,17 @@
-import topics from './topics';
 import users from './users';
+import documentations from './documentations';
+import documents from './documents';
+import subdocuments from './subdocuments';
+import sections from './sections';
+import organizations from './organizations';
 
-export { topics, users };
+export { documentations, documents, subdocuments, sections, organizations, users };
 
 export default {
-  topics,
+  documentations,
+  documents,
+  subdocuments,
+  sections,
+  organizations,
   users
 };

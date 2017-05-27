@@ -16,16 +16,24 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, unique: true, lowercase: true },
   password: String,
   tokens: Array,
+  firstname: String,
+  lastname: String,
+  Organizations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Organization'}],
   profile: {
     name: { type: String, default: '' },
     gender: { type: String, default: '' },
     location: { type: String, default: '' },
     website: { type: String, default: '' },
-    picture: { type: String, default: '' }
+    picture: {data: Buffer, contentType: String},
   },
+  Documents: [{type: mongoose.Schema.Types.ObjectId, ref: 'Document'}],
+  SubDocuments: [{type: mongoose.Schema.Types.ObjectId, ref: 'SubDocument'}],
+  Documentations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Section'}],
   resetPasswordToken: String,
   resetPasswordExpires: Date,
-  google: {}
+  friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  google: {},
+  CompanySite: String,
 });
 
 function encryptPassword(next) {
