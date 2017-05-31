@@ -17,6 +17,10 @@ class About extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    document.body.style.backgroundColor = "white";
+  }
+
   _handleTabChange = (value, e, tab) => {
     //console.log(this.context.history);
     console.log("Tab changed");

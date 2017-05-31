@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import styles from 'css/components/about';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -10,7 +11,13 @@ const cx = classNames.bind(styles);
  *  i.e. We should keep this as the container that does the data-fetching
  *  and dispatching of actions if you decide to have any sub-components.
  */
-const Profile = () => {
+
+ class Profile extends Component {
+   componentDidMount() {
+     document.body.style.backgroundColor = "white";
+   }
+
+render() {
   return (
     <div className={cx('about')}>
       <h1 className={cx('header')}>Profile</h1>
@@ -31,6 +38,8 @@ const Profile = () => {
       </div>
     </div>
   );
-};
+}
+
+}
 
 export default Profile;

@@ -3,7 +3,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import classNames from 'classnames/bind';
 import { withRouter } from 'react-router';
 import Navigation from '../containers/Navigation';
-import Message from '../containers/Message';
 import styles from '../css/main';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';

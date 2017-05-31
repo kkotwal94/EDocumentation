@@ -46,14 +46,14 @@ export default(store) => {
         callback();
     };
     return (
-        <Route path="/" component={App}>
-            <IndexRoute component={LandingPage}/>
-            <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}/>
-            <Route path="profile" component={Profile}/>
-            <Route path="dashboard" component={Dashboard} onEnter={requireAuth}/>
-            <Route path="about" component={About}/>
-            <Route path="documents" component={Document} />
-            <Route path="create" component={CreateDocument} />
-        </Route>
+      <Route path="/" component={App}>
+        <IndexRoute component={LandingPage} />
+        <Route path="login" component={LoginOrRegister} />
+        <Route path="profile" component={Profile} />
+        <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
+        <Route path="about" component={About} />
+        <Route path="documents" component={Document} />
+        <Route path="create" component={CreateDocument} />
+      </Route>
     );
 };

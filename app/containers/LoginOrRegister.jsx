@@ -19,6 +19,10 @@ class LoginOrRegister extends Component {
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
 
+  componentDidMount() {
+    document.body.style.backgroundColor = "#8BC34A";
+  }
+
   handleOnSubmit(event) {
     event.preventDefault();
 
@@ -44,7 +48,7 @@ class LoginOrRegister extends Component {
             <a
               className={cx('alternative-link')}
               onClick={toggleLoginMode}
-            >Register an Account</a>
+            > Register an Account</a>
           </div>
         </div>
       );
@@ -58,7 +62,7 @@ class LoginOrRegister extends Component {
           <a
             className={cx('alternative-link')}
             onClick={toggleLoginMode}
-          >Login</a>
+          > Login</a>
         </div>
       </div>
     );
@@ -135,4 +139,3 @@ function mapStateToProps({user}) {
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
 export default connect(mapStateToProps, { manualLogin, signUp, toggleLoginMode })(LoginOrRegister);
-

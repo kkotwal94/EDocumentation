@@ -5,6 +5,8 @@
 @import '../common/input';
 
 .login {
+  top: 64px;
+  position: relative;
   width: 420px;
   margin: 0 auto;
   background-color: var(--colorAthensGray);

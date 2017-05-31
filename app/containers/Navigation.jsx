@@ -30,8 +30,10 @@ class Navigation extends Component {
       open : false,
       leftNavOpen : false,
       renderTabs : true,
-      tabIndex : null
+      tabIndex : null,
+      user: this.props.user,
     }
+    this.user = '';
   }
 
   componentWillMount() {
@@ -39,7 +41,6 @@ class Navigation extends Component {
   }
 
   componentDidMount() {
-    console.log(this._getSelectedIndex());
     this.setState({ tabIndex : this._getSelectedIndex()});
     let setTabsState = function() {
       this.setState({renderTabs: !(document.body.clientWidth <= 871)});
@@ -132,6 +133,9 @@ class Navigation extends Component {
     if(value == 5) {
       route = '/about';
     }
+    if(value == 99){
+      route = "/";
+    }
       this.props.router.push(route);
       this.setState({tabIndex: this._getSelectedIndex()});
 
@@ -144,7 +148,8 @@ class Navigation extends Component {
 
   //method for handling logout
   _onLogout = () => {
-
+    console.log("Logging out");
+    this.props.logout;
   }
 
   //creating our tabs
@@ -197,7 +202,7 @@ class Navigation extends Component {
 
     };
     let renderedResult;
-    let loggedIn = true
+    let loggedIn = this.props.user.authenticated;
 
     let materialIcon = this.state.tabIndex !== '0' ? (
      <EnhancedButton
@@ -240,6 +245,7 @@ class Navigation extends Component {
                 <Tab
                   value={99}
                   label="LOGOUT"
+                  onClick={this.props.logOut}
                   style={styles.tab} />
                 <Tab
                 value={5}
@@ -311,8 +317,6 @@ return (
       this.props.router.isActive('/create') ? 'Create Documents' :
       'E-Docs';
 
-
-
       let style = {
         title : {
           float: 'left',
@@ -339,7 +343,7 @@ return (
 
   render() {
     let renderedresult;
-    let loggedIn = true;
+    let loggedIn = this.props.user.authenticated;
     let renderTabs = this.state.renderTabs;
     if(renderTabs == true){
     renderTabs = this._getTabs();
@@ -396,12 +400,12 @@ return (
             primaryText="About"/>
             <ListItem
               value="/logout"
+              onClick={this.props.logOut}
               primaryText="Log out"/>
           </SelectableList>
         </Drawer>
         );
     }
-
     else {
       renderedresult = (
         <Drawer width={300} docked = {false} open={this.state.leftNavOpen} onRequestChange={this.handleChangeRequestLeftNav}>
