@@ -1,0 +1,85 @@
+/*  SECTIONS  */
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.row__group:before, .row__group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.row__group {
+  zoom: 1;
+  /* For IE 6/7 */
+}
+
+.col:first-child {
+  margin-left: 0;
+}
+
+.col:nth-child(4n + 1) {
+  margin-left: 0;
+}
+
+.avatarBadge {
+  width: 220px;
+  float:left;
+}
+
+.txtName {
+  font-weight: 700;
+  margin: 10px 0 6px 0 !important
+}
+
+.txtProfileNumber {
+  display: block;
+    color: #0C0D0E;
+    font-weight: 700;
+    font-size: 17px;
+}
+
+.txtNumberSubHeader {
+  font-size:10px;
+}
+.txtCurrentPosition {
+  font-size: 18px;
+color: #777;
+line-height: 20px;
+margin-bottom: 14px;
+}
+
+.txtDescription {
+
+}
+
+.col {
+  display: block;
+  float: left;
+  margin: 1% 0 1% 1.6%;
+  /*  GRID OF TWELVE  */
+  /*  GO FULL WIDTH BELOW 480 PIXELS */
+}
+
+.col-1 {width: 8.33%; float:left;}
+.col-2 {width: 16.66%; float:left;}
+.col-3 {width: 25%; float:left;}
+.col-4 {width: 33.33%; float:left;}
+.col-5 {width: 41.66%; float:left;}
+.col-6 {width: 50%; float:left;}
+.col-7 {width: 58.33%; float:left;}
+.col-8 {width: 66.66%; float:left;}
+.col-9 {width: 75%; float:left;}
+.col-10 {width: 83.33%; float:left;}
+.col-11 {width: 91.66%; float:left;}
+.col-12 {width: 100%; float:left;}
+
+
+@media only screen and (max-width: 480px) {
+  .col .col {
+    margin: 1% 0 1% 0%;
+  }
+  .col .col-1-12, .col .col-2-12, .col .col-3-12, .col .col-4-12, .col .col-5-12, .col .col-6-12, .col .col-7-12, .col .col-8-12, .col .col-9-12, .col .col-10-12, .col .col-11-12, .col .col-12-12 {
+    width: 100%;
+  }
+}

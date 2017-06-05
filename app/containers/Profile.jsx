@@ -1,8 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
-import styles from 'css/components/about';
+import styles from 'css/components/profile';
 import RaisedButton from 'material-ui/RaisedButton';
+import Avatar from 'material-ui/Avatar';
+import Paper from 'material-ui/Paper';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
 
 const cx = classNames.bind(styles);
 
@@ -13,31 +17,141 @@ const cx = classNames.bind(styles);
  */
 
  class Profile extends Component {
+   constructor(props) {
+     super(props);
+     this.state = {
+       editable: false
+     };
+   }
    componentDidMount() {
-     document.body.style.backgroundColor = "white";
+     document.body.style.backgroundColor = '#fff';
    }
 
-render() {
-  return (
-    <div className={cx('about')}>
-      <h1 className={cx('header')}>Profile</h1>
-      <div className={cx('description')}>
-        <p>The Profile page
-        </p>
+   _setEditMode = () => {
+     if (!this.state.editable) {
+       this.setState({ editable: true});
+     } else {
+       this.setState({ editable: false});
+     }
+   }
+
+   _handleSubmit = () => {
+     console.log('saved');
+     this._setEditMode();
+   }
+
+ProfileCard = (
+    <Paper zDepth={2} style = {{height: '205px', width: '205px',position: 'relative', backgroundColor: '#4a8bc3'}}>
+      <img style={{width: '200px', height:'200px', top: '2.5px', margin: '0 auto', display: 'block', position: 'relative'}}src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwKu_UngLvQ53YxfyJ4k35anZpAMTveT7fpZRb5zWYDRKi-Wo6aJvEA"/>
+    </Paper>
+   );
+
+_markup() {
+let renderedResult;
+let isEditable = this.state.editable;
+
+if (!isEditable) {
+  renderedResult = (
+    <div className={cx('row')}>
+      <div className={cx('avatarBadge')}>
+        {this.ProfileCard}
+        <RaisedButton primary={true} style={{position: 'relative', top: '10px'}}label="Update Profile" onTouchTap={this._setEditMode}/>
       </div>
-      <div className={cx('contribute')}>
-        <RaisedButton
-          label="Test button"
-          primary={true}/>
-        <p>Want to contribute? Help us out!
-          If you think the code on &nbsp;
-          <a target="_blank" href="https://github.com/choonkending/react-webpack-node">this repo</a>
-        &nbsp;could be improved, please create an issue&nbsp;
-          <a target="_blank" href="https://github.com/choonkending/react-webpack-node/issues">here</a>!
-        </p>
+      <div style={{float: 'left', width: 'calc(100% - 220px)'}}>
+      <div className={cx('col-8')}>
+      <h2 className={cx('txtName')}>Karan Kotwal</h2>
+
+    <span className={cx('txtCurrentPosition')}>Works at Endevor as Application Developer</span>
+  <p className={cx('txtDescription')}> This is a page about me and my shenanigans, like creating this application </p>
+      </div>
+      <div className={cx('col-4')} style={{margin: '10px 0 6px 0 !important', maxWidth: '300px', float: 'right'}}>
+        <div className= {cx('col-4')}>
+          <span className={cx('txtProfileNumber')}>10</span>
+        <span className={cx('txtNumberSubHeader')}>Docs </span>
+        </div>
+
+      <div className={cx('col-4')}>
+        <div className= {cx('col-4')}>
+          <span className={cx('txtProfileNumber')}>6,399</span>
+        <span className={cx('txtNumberSubHeader')}>Contributions </span>
+        </div>
+      </div>
+      <div className={cx('col-4')}>
+        <div className= {cx('col-4')}>
+          <span className={cx('txtProfileNumber')}>33</span>
+        <span className={cx('txtNumberSubHeader')}>Organizations </span>
+        </div>
+      </div>
+    <div className={cx('row')} style={{marginTop:"60px"}}>
+      <div>kkotwal.me</div>
+    <div>github.com/kkotwal94</div>
+  <div>Member for this many years</div>
+    </div>
       </div>
     </div>
+  </div>
+);
+}
+else {
+  renderedResult = (
+    <div className={cx('row')}>
+      <div className={cx('avatarBadge')}>
+        {this.ProfileCard}
+      <RaisedButton primary={true} style={{position: 'relative', top: '10px'}}label="Save Changes" onTouchTap={this._handleSubmit} />
+      </div>
+      <div style={{float: 'left', width: 'calc(100% - 220px)'}}>
+      <div className={cx('col-8')}>
+      <TextField ref="name" className={cx('txtName')} floatingLabelText="Name" defaultValue="Karan Kotwal" />
+    <br/>
+  <TextField ref="jobtitle" className={cx('txtName')} floatingLabelText="Job Title" defaultValue="Application Developer" />
+  <br/>
+<TextField ref="companyname" className={cx('txtName')} floatingLabelText="Company Name" defaultValue="Endevor" />
+<br/>
+<TextField ref="description" className={cx('txtName')} floatingLabelText="Description" defaultValue="This is a page about me and my shenanigans, like creating this application" multiLine={true} rows={2} rowsMax={5}/>      </div>
+      <div className={cx('col-4')} style={{margin: '10px 0 6px 0 !important', maxWidth: '300px', float: 'right'}}>
+        <div className= {cx('col-4')}>
+          <span className={cx('txtProfileNumber')}>10</span>
+        <span className={cx('txtNumberSubHeader')}>Docs </span>
+        </div>
+
+      <div className={cx('col-4')}>
+        <div className= {cx('col-4')}>
+          <span className={cx('txtProfileNumber')}>6,399</span>
+        <span className={cx('txtNumberSubHeader')}>Contributions </span>
+        </div>
+      </div>
+      <div className={cx('col-4')}>
+        <div className= {cx('col-4')}>
+          <span className={cx('txtProfileNumber')}>33</span>
+        <span className={cx('txtNumberSubHeader')}>Organizations </span>
+        </div>
+      </div>
+    <div className={cx('row')} style={{marginTop:"60px"}}>
+    <TextField ref="personalweb" className={cx('txtName')} hintText="Personal Web Site" defaultValue="kkotwal.me" />
+    <TextField ref="github" className={cx('txtName')} hintText="Github site" defaultValue="github.com/kkotwal94" />
+    <div>Member for this many years</div>
+    </div>
+      </div>
+    </div>
+  </div>
   );
+}
+return (
+      <div>
+        {renderedResult}
+      </div>
+
+    );
+}
+
+render() {
+  let markup = this._markup();
+  return (
+    <div style={{position:'relative', top:'68px', margin: '0 auto'}}>
+      {markup}
+
+    </div>
+    );
 }
 
 }

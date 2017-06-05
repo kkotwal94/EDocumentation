@@ -17,10 +17,12 @@ axios.defaults.baseURL = baseURL;
  */
 export default function render(req, res) {
   const authenticated = req.isAuthenticated();
+  const profile = req.user;
   const history = createMemoryHistory();
   const store = configureStore({
     user: {
       authenticated,
+      profile,
       isWaiting: false,
       message: '',
       isLogin: true
