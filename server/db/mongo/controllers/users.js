@@ -56,7 +56,7 @@ export function signUp(req, res, next) {
 
 export function currentuser(req, res, next) {
   if (req.isAuthenticated()){
-          var user = req.user.profile;
+          var user = req.user;
           res.json(user);
           }
   else {

@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile';
 import RaisedButton from 'material-ui/RaisedButton';
-import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
+import {fetchProfileData} from '../actions/users';
 
 const cx = classNames.bind(styles);
 
@@ -25,6 +25,8 @@ const cx = classNames.bind(styles);
    }
    componentDidMount() {
      document.body.style.backgroundColor = '#fff';
+     //fetch data on pageload
+     this.props.fetchProfileData();
    }
 
    _setEditMode = () => {
@@ -145,6 +147,8 @@ return (
 }
 
 render() {
+  console.log(this.props.profile);
+  console.log(this.state.profile);
   let markup = this._markup();
   return (
     <div style={{position:'relative', top:'68px', margin: '0 auto'}}>
@@ -156,4 +160,15 @@ render() {
 
 }
 
-export default Profile;
+Profile.propTypes = {
+  profile: PropTypes.object,
+  fetchProfileData: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  return {
+    profile: state.profile
+  };
+}
+
+export default connect(mapStateToProps, { fetchProfileData })(Profile);

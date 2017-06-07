@@ -1,7 +1,21 @@
 import { push } from 'react-router-redux';
-import { authService } from '../services';
+import { authService, userService} from '../services';
+import { polyfill } from 'es6-promise';
+import md5 from 'spark-md5';
 
 import * as types from '../types';
+
+function fetchUserData() {
+  return {type: types.REQUEST_USER_PROFILE };
+}
+
+function fetchUserDataSuccess(data) {
+  return {type: types.REQUEST_USER_PROFILE_SUCCESS, data};
+}
+
+function fetchUserDataError(error) {
+  return {type: types.REQUEST_USER_PROFILE_ERROR, error};
+}
 
 function beginLogin() {
   return { type: types.MANUAL_LOGIN_USER };
@@ -60,7 +74,10 @@ export function manualLogin(data) {
     dispatch(beginLogin());
 
     return authService().login(data)
+
       .then((response) => {
+        console.log(data);
+        console.log(response);
           dispatch(loginSuccess('You have been successfully logged in'));
           dispatch(push('/'));
       })
@@ -88,7 +105,6 @@ export function signUp(data) {
 export function logOut() {
   return (dispatch) => {
     dispatch(beginLogout());
-
     return authService().logOut()
       .then((response) => {
           dispatch(logoutSuccess());
@@ -97,4 +113,20 @@ export function logOut() {
         dispatch(logoutError());
       });
   };
+}
+
+export function fetchProfileData() {
+  console.log("Fetching...");
+   return(dispatch) => {
+     dispatch(fetchUserData());
+     return userService().getUser()
+      .then((userData) => {
+        console.log(userData);
+        dispatch(fetchUserDataSuccess(userData.data))
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(fetchUserDataError(err))
+      });
+   };
 }

@@ -4,6 +4,10 @@ import createRestApiClient from '../utils/createRestApiClient';
 
 export default () => {
   const client = createRestApiClient().withConfig({ baseURL: apiEndpoint });
-}
-
-export default service;
+  return {
+    getUser: () => client.request({
+      method: 'GET',
+      url: '/currentuser'
+    })
+  };
+};

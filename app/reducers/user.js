@@ -72,11 +72,31 @@ const authenticated = (
   }
 };
 
+const profile = (
+  state = {},
+  action
+) => {
+ switch (action.type) {
+   case types.REQUEST_USER_PROFILE:
+      return state;
+   case types.REQUEST_USER_PROFILE_SUCCESS:
+      if (action.data) return action.data;
+        return state;
+    case types.REQUEST_USER_PROFILE_ERROR:
+      if (action.error) return action.error;
+        return state;
+    default:
+      return state;
+  }
+};
+
+
 const userReducer = combineReducers({
   isLogin,
   isWaiting,
   authenticated,
-  message
+  message,
+  profile
 });
 
 export default userReducer;

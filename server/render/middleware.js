@@ -22,7 +22,6 @@ export default function render(req, res) {
   const store = configureStore({
     user: {
       authenticated,
-      profile,
       isWaiting: false,
       message: '',
       isLogin: true
