@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema({
     location: { type: String, default: '' },
     website: { type: String, default: '' },
     picture: {data: Buffer, contentType: String},
-    description: {type: String, contentType: String},
+    description: {type: String, default: ''},
     company: {type: String, default: ''},
     jobtitle: {type: String, default: ''},
     github: {type: String, default: ''},
