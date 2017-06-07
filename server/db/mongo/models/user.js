@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
     location: { type: String, default: '' },
     website: { type: String, default: '' },
     picture: {data: Buffer, contentType: String},
+    description: {type: String, contentType: String},
+    company: {type: String, default: ''},
+    jobtitle: {type: String, default: ''},
+    github: {type: String, default: ''},
   },
   Documents: [{type: mongoose.Schema.Types.ObjectId, ref: 'Document'}],
   SubDocuments: [{type: mongoose.Schema.Types.ObjectId, ref: 'SubDocument'}],
@@ -33,7 +37,6 @@ const UserSchema = new mongoose.Schema({
   resetPasswordExpires: Date,
   friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   google: {},
-  CompanySite: String,
 });
 
 function encryptPassword(next) {

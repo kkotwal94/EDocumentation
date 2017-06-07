@@ -20,7 +20,8 @@ const cx = classNames.bind(styles);
    constructor(props) {
      super(props);
      this.state = {
-       editable: false
+       editable: false,
+       profile: this.props.profile
      };
    }
    componentDidMount() {
@@ -42,16 +43,40 @@ const cx = classNames.bind(styles);
      this._setEditMode();
    }
 
+    _occupationMessage(company, jobtitle){
+      if(company === "" && jobtitle === ""){
+        return 'No Current Occupation';
+      } else if (jobtitle === ''){
+          return 'Works at ' + company;
+      } else if (company === ''){
+          return 'Works as a ' + jobtitle;
+      } else {
+        return 'Works at ' + company + ' as a ' + jobtitle;
+      }
+   }
+
 ProfileCard = (
-    <Paper zDepth={2} style = {{height: '205px', width: '205px',position: 'relative', backgroundColor: '#4a8bc3'}}>
-      <img style={{width: '200px', height:'200px', top: '2.5px', margin: '0 auto', display: 'block', position: 'relative'}}src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwKu_UngLvQ53YxfyJ4k35anZpAMTveT7fpZRb5zWYDRKi-Wo6aJvEA"/>
+    <Paper zDepth={2} style={{height: '205px', width: '205px', position: 'relative', backgroundColor: '#4a8bc3'}}>
+      <img  role="presentation" style={{width: '200px', height: '200px', top: '2.5px', margin: '0 auto', display: 'block', position: 'relative'}}src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwKu_UngLvQ53YxfyJ4k35anZpAMTveT7fpZRb5zWYDRKi-Wo6aJvEA"/>
     </Paper>
    );
 
 _markup() {
 let renderedResult;
-let isEditable = this.state.editable;
-
+const isEditable = this.state.editable;
+const profileData = this.props.profile;
+let occupation = '';
+let name = '';
+let description = '';
+if (profileData.profile === undefined) {
+  occupation = '';
+  name = '';
+  description = '';
+  } else {
+occupation = this._occupationMessage(profileData.profile.company, profileData.profile.jobtitle);
+name = profileData.profile.name === '' ? 'Name not currently set' : profileData.profile.name;
+description = profileData === '' ? 'No Description set' : profileData.profile.description;
+}
 if (!isEditable) {
   renderedResult = (
     <div className={cx('row')}>
@@ -61,10 +86,10 @@ if (!isEditable) {
       </div>
       <div style={{float: 'left', width: 'calc(100% - 220px)'}}>
       <div className={cx('col-8')}>
-      <h2 className={cx('txtName')}>Karan Kotwal</h2>
+      <h2 className={cx('txtName')}>{name}</h2>
 
-    <span className={cx('txtCurrentPosition')}>Works at Endevor as Application Developer</span>
-  <p className={cx('txtDescription')}> This is a page about me and my shenanigans, like creating this application </p>
+    <span className={cx('txtCurrentPosition')}>{occupation}</span>
+  <p className={cx('txtDescription')}>{description}</p>
       </div>
       <div className={cx('col-4')} style={{margin: '10px 0 6px 0 !important', maxWidth: '300px', float: 'right'}}>
         <div className= {cx('col-4')}>
@@ -148,7 +173,6 @@ return (
 
 render() {
   console.log(this.props.profile);
-  console.log(this.state.profile);
   let markup = this._markup();
   return (
     <div style={{position:'relative', top:'68px', margin: '0 auto'}}>
@@ -167,7 +191,7 @@ Profile.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    profile: state.profile
+    profile: state.user.profile
   };
 }
 

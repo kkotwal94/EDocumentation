@@ -1,8 +1,8 @@
 {
-  "name": "react-webpack-node",
+  "name": "Docky",
   "version": "3.0.0",
-  "description": "Your One-Stop solution for a full-stack app with ES6/ES2015 React.js featuring universal Redux, React Router, React Router Redux Hot reloading, CSS modules, Express 4.x, and multiple ORMs.",
-  "repository": "https://github.com/choonkending/react-webpack-node",
+  "description": "Documentation app",
+  "repository": "https://github.com/kkotwal94/EDocumentation",
   "main": "index.js",
   "scripts": {
     "sequelize": "node_modules/.bin/sequelize",
@@ -16,7 +16,7 @@
     "test": "cross-env NODE_ENV=test karma start ./app/tests/karma.conf.js",
     "test:watch": "cross-env NODE_ENV=test npm test -- --watch --no-single-run"
   },
-  "author": "Choon Ken Ding",
+  "author": "Karan",
   "license": "MIT",
   "devDependencies": {
     "enzyme": "^2.4.1",
@@ -77,7 +77,7 @@
     "helmet": "^2.1.2",
     "json-loader": "^0.5.4",
     "lodash": "^4.16.2",
-    "material-ui": "^0.17.1",
+    "material-ui": "^0.18.2",
     "method-override": "^2.3.5",
     "mongoose": "^4.5.10",
     "passport": "^0.3.2",

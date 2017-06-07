@@ -223,7 +223,6 @@ class Navigation extends Component {
           <div style={styles.container}>
             <Tabs
               style={styles.tabs}
-              value={this.state.tabIndex}
               onChange={this._handleTabChange}
               inkBarStyle={{backgroundColor:"#E91E63"}}>
               <Tab
@@ -273,7 +272,6 @@ else {
           <div style={styles.container}>
             <Tabs
               style={styles.tabs}
-              value={this.state.tabIndex}
               onChange={this._handleTabChange}
               inkBarStyle={{backgroundColor:"#E91E63"}}>
                  <Tab
