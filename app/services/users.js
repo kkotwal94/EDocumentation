@@ -8,6 +8,11 @@ export default () => {
     getUser: () => client.request({
       method: 'GET',
       url: '/currentuser'
+    }),
+    updateUser: ({data, id}) => client.request({
+      method: 'POST',
+      url: `/updateuser/${id}`,
+      data,
     })
   };
 };

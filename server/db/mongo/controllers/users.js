@@ -66,16 +66,17 @@ export function currentuser(req, res, next) {
 }
 
 export function update(req, res) {
-    const query = {
-        id: req.params.id
-    };
-    const omitKeys = ['id', '_id', '_v'];
+    const id = req.params.id;
+    const omitKeys = ['id', '_id', '__v', 'password'];
     const data = _.omit(req.body, omitKeys);
-    User.findOneAndUpdate(query, data, (err) => {
+    console.log(data);
+    User.findByIdAndUpdate(id, data, (result, err) => {
         if (err) {
             console.log('Error on save!');
             return res.status(500).send('We failed to save for some reason');
         }
+        console.log(result);
+        console.log(err);
         return res.status(200).send('Updated successfully');
     });
 }
@@ -89,7 +90,8 @@ export function remove(req, res) {
             console.log('Error on delete');
             return res.status(500).send('We failed to delete for some reason');
         }
-
+        console.log(query.id);
+        console.log('Success');
         return res.status(200).send('Removed Successfully');
     });
 }

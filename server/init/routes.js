@@ -19,7 +19,7 @@ export default (app) => {
     app.post('/users', usersController.signUp);
     app.delete('/sessions', usersController.logout);
     app.get('/currentuser', usersController.currentuser);
-    app.post('/updateuser', usersController.update);
+    app.post('/updateuser/:id', usersController.update);
     app.delete('/removeuser', usersController.remove);
   } else {
     console.warn(unsupportedMessage('users routes'));

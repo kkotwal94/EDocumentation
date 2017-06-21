@@ -6,7 +6,7 @@ import styles from 'css/components/profile';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import {fetchProfileData} from '../actions/users';
+import {fetchProfileData, updateProfileData} from '../actions/users';
 
 const cx = classNames.bind(styles);
 
@@ -21,7 +21,7 @@ const cx = classNames.bind(styles);
      super(props);
      this.state = {
        editable: false,
-       profile: this.props.profile
+       profile: this.props.profile,
      };
    }
    componentDidMount() {
@@ -39,20 +39,23 @@ const cx = classNames.bind(styles);
    }
 
    _handleSubmit = () => {
-     console.log('saved');
+     let dataObjToCopy = this.props.profile;
+     const name = this.name;
+     dataObjToCopy.profile.name = name.input.value;
+     console.log(dataObjToCopy._id);
+     this.props.updateProfileData(dataObjToCopy, dataObjToCopy._id);
      this._setEditMode();
    }
 
-    _occupationMessage(company, jobtitle){
-      if(company === "" && jobtitle === ""){
+    _occupationMessage(company, jobtitle) {
+      if(company === '' && jobtitle === '') {
         return 'No Current Occupation';
-      } else if (jobtitle === ''){
+      } else if (jobtitle === '') {
           return 'Works at ' + company;
-      } else if (company === ''){
+      } else if (company === '') {
           return 'Works as a ' + jobtitle;
-      } else {
-        return 'Works at ' + company + ' as a ' + jobtitle;
       }
+        return 'Works at ' + company + ' as a ' + jobtitle;
    }
 
 ProfileCard = (
@@ -68,14 +71,33 @@ const profileData = this.props.profile;
 let occupation = '';
 let name = '';
 let description = '';
+let website = '';
+let github = '';
+let jobtitle = '';
+let company = '';
+let githubData = '';
+let websiteData = '';
 if (profileData.profile === undefined) {
   occupation = '';
   name = '';
   description = '';
+  website = '';
+  github = '';
+  jobtitle = '';
+  githubData = '';
+  websiteData = '';
+  company = '';
   } else {
 occupation = this._occupationMessage(profileData.profile.company, profileData.profile.jobtitle);
 name = profileData.profile.name === '' ? 'Name not currently set' : profileData.profile.name;
 description = profileData === '' ? 'No Description set' : profileData.profile.description;
+website = profileData === '' ? null : <div>{profileData.profile.website}</div>
+github = profileData === '' ? null : <div>{profileData.profile.github}</div>
+websiteData = profileData === '' ? null : profileData.profile.website;
+githubData = profileData === '' ? null : profileData.profile.github;
+company = profileData === '' ? null : profileData.profile.company;
+jobtitle = profileData === '' ? null : profileData.profile.jobtitle;
+
 }
 if (!isEditable) {
   renderedResult = (
@@ -110,9 +132,9 @@ if (!isEditable) {
         </div>
       </div>
     <div className={cx('row')} style={{marginTop:"60px"}}>
-      <div>kkotwal.me</div>
-    <div>github.com/kkotwal94</div>
-  <div>Member for this many years</div>
+      {website}
+      {github}
+      <div>Member for this many years</div>
     </div>
       </div>
     </div>
@@ -128,13 +150,13 @@ else {
       </div>
       <div style={{float: 'left', width: 'calc(100% - 220px)'}}>
       <div className={cx('col-8')}>
-      <TextField ref="name" className={cx('txtName')} floatingLabelText="Name" defaultValue="Karan Kotwal" />
+      <TextField ref={(input) => { this.name = input; }} className={cx('txtName')} floatingLabelText="Name" defaultValue={name} />
     <br/>
-  <TextField ref="jobtitle" className={cx('txtName')} floatingLabelText="Job Title" defaultValue="Application Developer" />
+  <TextField ref="jobtitle" className={cx('txtName')} floatingLabelText="Job Title" defaultValue={jobtitle} />
   <br/>
-<TextField ref="companyname" className={cx('txtName')} floatingLabelText="Company Name" defaultValue="Endevor" />
+<TextField ref="companyname" className={cx('txtName')} floatingLabelText="Company Name" defaultValue={company} />
 <br/>
-<TextField ref="description" className={cx('txtName')} floatingLabelText="Description" defaultValue="This is a page about me and my shenanigans, like creating this application" multiLine={true} rows={2} rowsMax={5}/>      </div>
+<TextField ref="description" className={cx('txtName')} floatingLabelText="Description" defaultValue={description} multiLine={true} rows={2} rowsMax={5}/>      </div>
       <div className={cx('col-4')} style={{margin: '10px 0 6px 0 !important', maxWidth: '300px', float: 'right'}}>
         <div className= {cx('col-4')}>
           <span className={cx('txtProfileNumber')}>10</span>
@@ -154,8 +176,8 @@ else {
         </div>
       </div>
     <div className={cx('row')} style={{marginTop:"60px"}}>
-    <TextField ref="personalweb" className={cx('txtName')} hintText="Personal Web Site" defaultValue="kkotwal.me" />
-    <TextField ref="github" className={cx('txtName')} hintText="Github site" defaultValue="github.com/kkotwal94" />
+    <TextField ref="personalweb" className={cx('txtName')} hintText="Personal Web Site" defaultValue={websiteData} />
+  <TextField ref="github" className={cx('txtName')} hintText="Github site" defaultValue={githubData} />
     <div>Member for this many years</div>
     </div>
       </div>
@@ -186,13 +208,14 @@ render() {
 
 Profile.propTypes = {
   profile: PropTypes.object,
-  fetchProfileData: PropTypes.func.isRequired
+  fetchProfileData: PropTypes.func.isRequired,
+  updateProfileData: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    profile: state.user.profile
+    profile: state.user.profile,
   };
 }
 
-export default connect(mapStateToProps, { fetchProfileData })(Profile);
+export default connect(mapStateToProps, { fetchProfileData, updateProfileData })(Profile);

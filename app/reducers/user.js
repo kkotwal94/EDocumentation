@@ -85,6 +85,14 @@ const profile = (
     case types.REQUEST_USER_PROFILE_ERROR:
       if (action.error) return action.error;
         return state;
+    case types.UPDATE_USER_PROFILE:
+      return state;
+    case types.UPDATE_USER_PROFILE_SUCCESS:
+      if (action.data) return Object.assign({}, action.data);
+        return state;
+    case types.UPDATE_USER_PROFILE_ERROR:
+      if (action.error) return action.error;
+        return state;
     default:
       return state;
   }
